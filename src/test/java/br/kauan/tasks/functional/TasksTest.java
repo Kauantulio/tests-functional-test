@@ -1,23 +1,25 @@
 package br.kauan.tasks.functional;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v108.log.Log;
-import org.openqa.selenium.devtools.v108.runtime.Runtime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class TasksTest {
 	
 	public WebDriver acessarAplicacao() throws MalformedURLException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\kauan.tulio\\kabum\\java\\seleniumDrivers\\chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
-        driver.get("http://192.168.15.200:8001/tasks/");
-		
+		DesiredCapabilities cap = new DesiredCapabilities();
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.15.200:4444/wd/hub"), cap);
+		driver.navigate().to("http://192.168.15.200:8001/tasks/");
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
 
